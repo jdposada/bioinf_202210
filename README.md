@@ -14,3 +14,29 @@ We are going to use mostly R but some Python code here and there. To ensure ever
 - Open a Web browser and type on the bar `http://localhost:8787`. You will be promoted for a user and password. Both are **ohdsi**. The username and password can be changed if you change the values of the parameters `USER` and `PASSWORD` on the command run on the previous step
 - After login you should see RStudio server on your browser. Type this command in the R terminal `library(PatientLevelPrediction)` The library should load with no issues.
 
+## Remote Development Environment on Cloud
+
+### Azure setup and VM
+
+- Open an [Azure Student Account](https://azure.microsoft.com/en-us/free/students/) using your Uninorte email. This will give you 100 USD in credits
+- Start a VM with 1 Core and 4GB of RAM. We will cover how to do this in class. We will use Ubuntu 20.04. Here some [instructions](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) for you to peek
+- Connect to the VM using SSH. If you are in windows you will need to use a [compatible SSH client](https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client). if you are in Ubuntu you are all set. the command you will need to run is something like this `ssh oopclass@10.1.1.1`. In this command oopclass is the user that was created during the VM creation and the IP is assigned automatically by Azure.
+- Install Docker and Git **inside the VM**
+    - [Docker instructions](https://docs.docker.com/engine/install/ubuntu/)
+    - [Git Instructions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- Add current users to sudoers to use Docker as current user **inside the VM**
+    - `sudo groupadd docker`
+    - `sudo usermod -aG docker $USER`
+    - `newgrp docker`
+    - Check that you everything is ok by running `docker run hello-world`
+    - **Turn off** the VM for the changes to have effect and **Turn on** again
+- *Optional*
+    - If you want to login on Github and you have two factor authentication enabled you need to first
+        - [Generate a personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+        - Run this command so your Git credentials are stored `git config --global credential.helper store`
+- Clone our course repository on /home/$USER **inside the VM**. `git clone https://github.com/jdposada/bioinf_202210.git`
+    - *Optional*
+        - You could decide to [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the main repo so you have minor changes and other files in it. If that is the case you could keep it private. If you made this decision you should clone your fork instead of the class repo. Keep in mind you need to [keep your fork updated](https://stackoverflow.com/questions/39819441/keeping-a-fork-up-to-date)
+
+### Locally
+
