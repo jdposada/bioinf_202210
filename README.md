@@ -41,11 +41,10 @@ We are going to use mostly R but some Python code here and there. To ensure ever
 ### Locally
 
 - Connect to the VM using an SSH tunnel
-    - `ssh -L 8787:localhost:8787 investigacion@20.119.193.126`
+    - `ssh -L 8787:localhost:8787 investigacion@<Your IP Here>`
 - Run the following command on the Azure VM 
     - `docker run -d --name=rstudio-ohdsi --network=host -v /home/$USER/bioinf_202210:/home/ohdsi/workdir -e USER=ohdsi -e PASSWORD=ohdsi odysseusinc/rstudio-ohdsi:latest`
-- To check that the container is properly running run the command below. You should see a container with the name `rstudio-ohdsi`
-    - `docker ps`
+- To check that the container is properly running by executingon the terminal `docker ps`. You should see a container with the name `rstudio-ohdsi`
 - Open a Web browser and type on the bar `http://localhost:8787`. You will be promoted for a user and password. Both are **ohdsi**. The username and password can be changed if you change the values of the parameters `USER` and `PASSWORD` on the command run on the previous step. Be sure to check the box `Stay signed in when browser closes` if you want to Rstudio server to run in the background without you actively being there. This is very useful for long runnings. 
 - After login you should see RStudio server on your browser. Type this command in the R terminal `library(PatientLevelPrediction)` The library should load with no issues.
 
