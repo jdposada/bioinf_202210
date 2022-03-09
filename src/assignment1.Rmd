@@ -1,0 +1,67 @@
+# Assignment #01
+
+---
+
+## Download CSV files
+
+Here we're downloading all the files from the [IMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
+
+*Note: The downloaded files must be the ones related to the [OMOP-CDM data model](https://ohdsi.github.io/TheBookOfOhdsi/CommonDataModel.html).*
+
+```{r echo=T, results='hide'}
+download_path = '/home/ohdsi/workdir/src/assignment_1_downloads'
+base_url = 'https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv'
+
+files = c('care_site.csv', 'cdm_source.csv', 'cohort.csv', 'cohort_definition.csv', 'condition_era.csv', 'condition_occurrence.csv',  'cost.csv', 'device_exposure.csv', 'dose_era.csv', 'drug_era.csv', 'drug_exposure.csv', 'fact_relationship.csv', 'location.csv', 'measurement.csv', 'metadata.csv', 'note.csv', 'note_nlp.csv', 'observation.csv', 'observation_period.csv', 'payer_plan_period.csv', 'person.csv', 'procedure_occurrence.csv', 'provider.csv', 'specimen.csv', 'visit_detail.csv', 'visit_occurrence.csv')
+
+lapply(files, function(file){
+  download_url = paste0(base_url, '/', file, '?download')
+  file_path = paste0(download_path, '/', file)
+  
+  download.file(download_url, file_path)
+})
+```
+
+## Create the Database
+
+Then we create the database (DB) with the [RSQLite](https://cran.r-project.org/web/packages/RSQLite/vignettes/RSQLite.html) package.
+
+```{r echo=T, results='hide'}
+library(DBI)
+
+source = '/home/ohdsi/workdir/src/assignment_1_downloads'
+files = list.files(source)
+
+# Create DB.
+mimic_iv_db = dbConnect(RSQLite::SQLite(), 'mimic_iv_demo.sqlite')
+
+lapply(files, function(file){
+  table_name = substr(file, 1, nchar(file) - 4)
+  file_path = paste0(source, '/', file)
+  data = read.csv(file_path)
+  dbWriteTable(mimic_iv_db, table_name, data, overwrite=TRUE)
+})
+
+dbDisconnect(mimic_iv_db)
+```
+
+Finally we can check out the data by querying it: 
+
+```{r echo=T}
+library(DBI)
+
+mimic_iv_db = dbConnect(RSQLite::SQLite(), 'mimic_iv_demo.sqlite')
+
+dbGetQuery(mimic_iv_db, 'SELECT * FROM care_site LIMIT 5')
+
+dbDisconnect(mimic_iv_db)
+```
+
+---
+
+
+
+
+  
+  
+  
