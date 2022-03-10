@@ -1,0 +1,33 @@
+---
+title: "asigment1"
+output: html_document
+---
+
+```{r include=FALSE}
+if (!"DataQualityDashboard" %in% rownames(installed.packages())) {
+  install.packages("devtools")
+  devtools::install_github("OHDSI/DataQualityDashboard")
+}
+
+download.file(
+  "https://physionet.org/files/mimic-iv-demo-omop/0.9/3_data_quality_dashboard_files/results_MIMICIVdemo210426.json?download", 
+  file.path(getwd(), "results_MIMICIVdemo210426.json")
+)
+
+```
+
+# Assignment \#01
+
+Execute Data quality Daschboard application using file results_MIMICIVdemo210426.json.
+
+```{r echo=TRUE}
+library("DataQualityDashboard")
+
+DataQualityDashboard::viewDqDashboard(
+  jsonPath = file.path(
+    getwd(), 
+    "results_MIMICIVdemo210426.json"
+  )
+)
+
+```
