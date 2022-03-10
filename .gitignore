@@ -37,3 +37,9 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Assigment 01 related config
+src/assignment_1_downloads/*
+src/assignment1.html
+src/mimic_iv_demo.sqlite
+
