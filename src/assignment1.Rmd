@@ -4,7 +4,7 @@
 
 ## Download CSV files
 
-Here we're downloading all the files from the [IMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
+Here we're downloading all the files from the [MIMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
 
 *Note: The downloaded files must be the ones related to the [OMOP-CDM data model](https://ohdsi.github.io/TheBookOfOhdsi/CommonDataModel.html).*
 
