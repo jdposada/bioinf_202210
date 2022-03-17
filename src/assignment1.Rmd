@@ -11,9 +11,7 @@ Here we're downloading all the files from the [MIMIC IV demo dataset](https://ph
 ```{r echo=T, results='hide'}
 download_path = '/home/ohdsi/workdir/src/assignment_1_downloads'
 base_url = 'https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv'
-
 files = c('care_site.csv', 'cdm_source.csv', 'cohort.csv', 'cohort_definition.csv', 'condition_era.csv', 'condition_occurrence.csv',  'cost.csv', 'device_exposure.csv', 'dose_era.csv', 'drug_era.csv', 'drug_exposure.csv', 'fact_relationship.csv', 'location.csv', 'measurement.csv', 'metadata.csv', 'note.csv', 'note_nlp.csv', 'observation.csv', 'observation_period.csv', 'payer_plan_period.csv', 'person.csv', 'procedure_occurrence.csv', 'provider.csv', 'specimen.csv', 'visit_detail.csv', 'visit_occurrence.csv')
-
 lapply(files, function(file){
   download_url = paste0(base_url, '/', file, '?download')
   file_path = paste0(download_path, '/', file)
@@ -28,20 +26,16 @@ Then we create the database (DB) with the [RSQLite](https://cran.r-project.org/w
 
 ```{r echo=T, results='hide'}
 library(DBI)
-
 source = '/home/ohdsi/workdir/src/assignment_1_downloads'
 files = list.files(source)
-
 # Create DB.
 mimic_iv_db = dbConnect(RSQLite::SQLite(), 'mimic_iv_demo.sqlite')
-
 lapply(files, function(file){
   table_name = substr(file, 1, nchar(file) - 4)
   file_path = paste0(source, '/', file)
   data = read.csv(file_path)
   dbWriteTable(mimic_iv_db, table_name, data, overwrite=TRUE)
 })
-
 dbDisconnect(mimic_iv_db)
 ```
 
@@ -49,11 +43,8 @@ Finally we can check out the data by querying it:
 
 ```{r echo=T}
 library(DBI)
-
 mimic_iv_db = dbConnect(RSQLite::SQLite(), 'mimic_iv_demo.sqlite')
-
 dbGetQuery(mimic_iv_db, 'SELECT * FROM care_site LIMIT 5')
-
 dbDisconnect(mimic_iv_db)
 ```
 
@@ -63,12 +54,10 @@ if (!"DataQualityDashboard" %in% rownames(installed.packages())) {
   install.packages("devtools")
   devtools::install_github("OHDSI/DataQualityDashboard")
 }
-
 download.file(
   "https://physionet.org/files/mimic-iv-demo-omop/0.9/3_data_quality_dashboard_files/results_MIMICIVdemo210426.json?download", 
   file.path(getwd(), "results_MIMICIVdemo210426.json")
 )
-
 ```
 
 ## 2. Treemap example
@@ -111,12 +100,9 @@ library(treemapify)
 Pintar el treemap con 1000 filas
 ```{r}
 df_drug_exposure_1000 = head(df_drug_exposure,1000)
-
 ggplot(df_drug_exposure_1000, aes(area = quantity, fill = drug_concept_id)) +
   geom_treemap()
-
 df2_measurement_1000 = head(df2_measurement,1000)
-
 ggplot(df2_measurement_1000, aes(area = value_as_number, fill = unit_concept_id)) +
   geom_treemap()
 ```
@@ -125,10 +111,78 @@ Pintar el treemap completo
 ```{r}
 #ggplot(df_drug_exposure, aes(area = quantity, fill = drug_concept_id)) +
 #  geom_treemap()
-
 #ggplot(df2_measurement, aes(area = value_as_number, fill = unit_concept_id)) +
 #  geom_treemap()
+```
 
+
+## 3. Treemap Example 1 
+
+---
+title: "Punto3 - BioInformatica"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Librería necesaria para cargar archivos CSV 
+```{r}
+library(readr)  
+```
+
+Cargar los archivos en una estructura en la memoria
+```{r}
+drug_exposure <- read_csv("data/mimic_iv_demo/csv/drug_exposure.csv")
+measurement <- read_csv("data/mimic_iv_demo/csv/measurement.csv")
+```
+
+Se crea el dataframe a partir de los datos cargados del csv
+```{r}
+df_drug_exposure = data.frame(drug_exposure)
+df2_measurement = data.frame(measurement)
+```
+Ver el summary
+
+```{r}
+summary(df_drug_exposure)
+summary(df2_measurement)
+```
+
+Instalar la librería que necesitamos para pintar
+```{r}
+install.packages("treemapify")
+```
+
+Cargar librería de R para pintar el treemap 
+```{r}
+library(ggplot2)
+library(treemapify)
+```
+
+Pintar el treemap con 1000 filas
+```{r}
+df_drug_exposure_1000 = head(df_drug_exposure,1000)
+ggplot(df_drug_exposure_1000, aes(area = quantity, fill = drug_concept_id)) +
+  geom_treemap()
+df2_measurement_1000 = head(df2_measurement,1000)
+ggplot(df2_measurement_1000, aes(area = value_as_number, fill = unit_concept_id)) +
+  geom_treemap()
+```
+
+Pintar el treemap completo
+```{r}
+#ggplot(df_drug_exposure, aes(area = quantity, fill = drug_concept_id)) +
+#  geom_treemap()
+#ggplot(df2_measurement, aes(area = value_as_number, fill = unit_concept_id)) +
+#  geom_treemap()
 ```
 
 ## 4. Data Quality DashBoard
@@ -137,13 +191,11 @@ Execute Data quality Daschboard application using file results_MIMICIVdemo210426
 
 ```{r echo=TRUE}
 library("DataQualityDashboard")
-
 DataQualityDashboard::viewDqDashboard(
   jsonPath = file.path(
     getwd(), 
     "results_MIMICIVdemo210426.json"
   )
 )
-
 ```
 ---
