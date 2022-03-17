@@ -2,7 +2,7 @@
 
 ---
 
-## Download CSV files
+## 1. Download CSV files
 
 Here we're downloading all the files from the [MIMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
 
@@ -71,7 +71,7 @@ download.file(
 
 ```
 
-## Data Quality DashBoard
+## 4. Data Quality DashBoard
 
 Execute Data quality Daschboard application using file results_MIMICIVdemo210426.json.
 
