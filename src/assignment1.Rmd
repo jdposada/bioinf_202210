@@ -71,6 +71,66 @@ download.file(
 
 ```
 
+## 2. Treemap example
+
+Librería necesaria para cargar archivos CSV 
+```{r, echo=F}
+library(readr)  
+```
+
+Cargar los archivos en una estructura en la memoria
+```{r}
+file_path = paste0(download_path, '/', file)
+drug_exposure <- read_csv(paste0(download_path, '/', "drug_exposure.csv"))
+measurement <- read_csv(paste0(download_path, '/', "measurement.csv"))
+```
+
+Se crea el dataframe a partir de los datos cargados del csv
+```{r}
+df_drug_exposure = data.frame(drug_exposure)
+df2_measurement = data.frame(measurement)
+```
+Ver el summary
+
+```{r}
+summary(df_drug_exposure)
+summary(df2_measurement)
+```
+
+Instalar la librería que necesitamos para pintar
+```{r}
+install.packages("treemapify")
+```
+
+Cargar librería de R para pintar el treemap 
+```{r}
+library(ggplot2)
+library(treemapify)
+```
+
+Pintar el treemap con 1000 filas
+```{r}
+df_drug_exposure_1000 = head(df_drug_exposure,1000)
+
+ggplot(df_drug_exposure_1000, aes(area = quantity, fill = drug_concept_id)) +
+  geom_treemap()
+
+df2_measurement_1000 = head(df2_measurement,1000)
+
+ggplot(df2_measurement_1000, aes(area = value_as_number, fill = unit_concept_id)) +
+  geom_treemap()
+```
+
+Pintar el treemap completo
+```{r}
+#ggplot(df_drug_exposure, aes(area = quantity, fill = drug_concept_id)) +
+#  geom_treemap()
+
+#ggplot(df2_measurement, aes(area = value_as_number, fill = unit_concept_id)) +
+#  geom_treemap()
+
+```
+
 ## 4. Data Quality DashBoard
 
 Execute Data quality Daschboard application using file results_MIMICIVdemo210426.json.
