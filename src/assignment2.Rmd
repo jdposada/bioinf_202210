@@ -11,6 +11,7 @@ connectionDetails <- getEunomiaConnectionDetails()
 connection <- connect(connectionDetails)
 createCohorts(connectionDetails)
 ```
+
 Check out the data by querying it:
 
 ```{r echo=T, results='hide'}
@@ -19,9 +20,58 @@ querySql(connection, "SELECT * FROM cohort LIMIT 5;")
 
 ## 02. Use Feature Extraction
 
+Create per-person covariates for a cohort of interest
+
+```{r echo=T, results='hide'}
+library(FeatureExtraction)
+
+cdmDatabaseSchema <- "main"
+resultsDatabaseSchema <- "main"
+
+settings <- createDefaultCovariateSettings()
+
+covariateData <- getDbCovariateData(connectionDetails = connectionDetails,
+                                    cdmDatabaseSchema = cdmDatabaseSchema,
+                                    cohortDatabaseSchema = resultsDatabaseSchema,
+                                    cohortTable = "cohort",
+                                    cohortId = 1,
+                                    rowIdField = "subject_id",
+                                    covariateSettings = settings)
+
+summary(covariateData)
+```
+
+Create aggregated covariates for a cohort of interest from per-person covariates
+
+```{r echo=T, results='hide'}
+covariateData2 <- aggregateCovariates(covariateData)
+summary(covariateData2)
+```
+
+Create aggregated covariates for a cohort of interest at creation
+
+```{r echo=T, results='hide'}
+covariateData3 <- getDbCovariateData(connectionDetails = connectionDetails,
+                                     cdmDatabaseSchema = cdmDatabaseSchema,
+                                     cohortDatabaseSchema = resultsDatabaseSchema,
+                                     cohortTable = "cohort",
+                                     cohortId = 1,
+                                     covariateSettings = settings,
+                                     aggregated = TRUE)
+summary(covariateData3)
+```
+
 ## 03. Show the Features
 
-## 04. Download CSV files
+```{r echo=T, results='hide'}
+show(covariateData)
+show(covariateData2)
+show(covariateData3)
+```
+
+## 04. Create a Cohort using SQL
+
+### Download CSV files
 
 Here we're downloading all the files from the [MIMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
 
