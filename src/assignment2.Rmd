@@ -63,10 +63,26 @@ summary(covariateData3)
 
 ## 03. Show the Features
 
+For per-person covariates (No Table1)
+
 ```{r echo=T, results='hide'}
 show(covariateData)
+```
+
+Table1 for aggregated covariates from per-person covariates
+
+```{r echo=T, results='hide'}
 show(covariateData2)
+result2 <- createTable1(covariateData2, output = 'one column')
+print(result2, row.names = FALSE, right = FALSE)
+```
+
+Table1 for aggregated covariates at creation
+
+```{r echo=T, results='hide'}
 show(covariateData3)
+result3 <- createTable1(covariateData3, output = 'one column')
+print(result3, row.names = FALSE, right = FALSE)
 ```
 
 ## 04. Create a Cohort using SQL
