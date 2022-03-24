@@ -2,7 +2,26 @@
 
 ---
 
-## Download CSV files
+## 01. Load Eunomia Cohorts
+
+```{r echo=T, results='hide'}
+library(Eunomia)
+
+connectionDetails <- getEunomiaConnectionDetails()
+connection <- connect(connectionDetails)
+createCohorts(connectionDetails)
+```
+Check out the data by querying it:
+
+```{r echo=T, results='hide'}
+querySql(connection, "SELECT * FROM cohort LIMIT 5;")
+```
+
+## 02. Use Feature Extraction
+
+## 03. Show the Features
+
+## 04. Download CSV files
 
 Here we're downloading all the files from the [MIMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
 
