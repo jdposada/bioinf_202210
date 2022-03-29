@@ -63,10 +63,44 @@ summary(covariateData3)
 
 ## 03. Show the Features
 
-For per-person covariates (No Table1)
+### Per-person Covariates
+
+Show Tables for per-person covariates
 
 ```{r echo=T, results='hide'}
 show(covariateData)
+```
+
+Features for per-person covariates
+
+```{r echo=T, results='hide'}
+covariateData$covariateRef
+```
+
+```{r echo=T, results='hide'}
+covariateData$covariates
+```
+
+### Aggregated covariates from per-person covariates
+
+Show Tables for aggregated covariates from per-person covariates
+
+```{r echo=T, results='hide'}
+show(covariateData2)
+```
+
+Features for aggregated covariates from per-person covariates
+
+```{r echo=T, results='hide'}
+covariateData2$covariateRef
+```
+
+```{r echo=T, results='hide'}
+covariateData2$covariates
+```
+
+```{r echo=T, results='hide'}
+covariateData2$covariatesContinuous
 ```
 
 Table1 for aggregated covariates from per-person covariates
@@ -77,10 +111,31 @@ result2 <- createTable1(covariateData2, output = 'one column')
 print(result2, row.names = FALSE, right = FALSE)
 ```
 
-Table1 for aggregated covariates at creation
+### Aggregated covariates at creation
+
+Show Tables for aggregated covariates at creation
 
 ```{r echo=T, results='hide'}
 show(covariateData3)
+```
+
+Features for aggregated covariates at creation
+
+```{r echo=T, results='hide'}
+covariateData3$covariateRef
+```
+
+```{r echo=T, results='hide'}
+covariateData3$covariates
+```
+
+```{r echo=T, results='hide'}
+covariateData3$covariatesContinuous
+```
+
+Table1 for aggregated covariates at creation
+
+```{r echo=T, results='hide'}
 result3 <- createTable1(covariateData3, output = 'one column')
 print(result3, row.names = FALSE, right = FALSE)
 ```
