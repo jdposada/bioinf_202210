@@ -1,0 +1,42 @@
+---
+title: "First Partial Exam"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+In this first partial you will evaluated on the following topics
+
+- The healthcare system
+- Analytical use cases with clinical data
+- Clinical data standardization
+- Data processing and feature generation with clinical data
+
+## Grading
+
+Each point will be graded independently. It is expected that you fully support all your answers. If the question requests coding, you should comment every line of code you write. The comments should show your understanding of what is going on. All the answers should be in this same document
+
+- **Time**: You will have 2 hours to complete the assignment
+- **Mode of delivery**: You will submit your exam as a private Github repository. You should add me @posadajd as a collaborator so I can see the repository.
+
+## Topic 1 (15%): The Healthcare System
+
+- Draw a the process that a person goes trough to get admitted to an ICU after arriving to an emergency department. You could use a flowchart or any other diagram that convey your thoughts. (100%)
+
+## Topic 2 (15%): Analytical Use Cases with Clinical Data
+
+- Describe with your own words the three typical analytical use cases with clinical data (40%)
+- Fully describe the setup and clinical question of a prediction problem (60%)
+
+## Topic 3 (30%): Clinical Data Standardization
+
+- Use [Athena](athena.ohdsi.org) to find the equivalent code for five Colombian [CUPS](https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VP/DOA/actualizacion-cups-2022.pdf) codes. CUPS codes can be found [here](https://web.sispro.gov.co/WebPublico/Consultas/ConsultarDetalleReferenciaBasica.aspx?Code=CUPS) (50%)
+-  Use [Athena](athena.ohdsi.org) to find the equivalent code for five Colombian [IUM](https://www.minsalud.gov.co/salud/MT/Paginas/estandar-datos-medicamentos.aspx) codes. IUM codes can be found [here](https://www.datos.gov.co/Salud-y-Protecci-n-Social/C-DIGO-NICO-DE-MEDICAMENTOS-VIGENTES/i7cb-raxc) (50%)
+
+## Topic 4 (40%): Data Processing and Feature Generation
+
+- Load MIMIC IV OMOP-CDM sample data into a SQL lite database (10%)
+- Write code to compute the top 10 diagnoses and present as a table (20%)
+- Write code to compute the top 10 used medications and present as a table (20%)
+- Inspect a single patient and generate features for the top 10 diagnoses and medications found on the previous points. (50%)
+

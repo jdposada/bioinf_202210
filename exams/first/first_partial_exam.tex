@@ -1,0 +1,172 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={First Partial Exam},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{First Partial Exam}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+In this first partial you will evaluated on the following topics
+
+\begin{itemize}
+\tightlist
+\item
+  The healthcare system
+\item
+  Analytical use cases with clinical data
+\item
+  Clinical data standardization
+\item
+  Data processing and feature generation with clinical data
+\end{itemize}
+
+\hypertarget{grading}{%
+\subsection{Grading}\label{grading}}
+
+Each point will be graded independently. It is expected that you fully
+support all your answers. If the question requests coding, you should
+comment every line of code you write. The comments should show your
+understanding of what is going on. All the answers should be in this
+same document
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Time}: You will have 2 hours to complete the assignment
+\item
+  \textbf{Mode of delivery}: You will submit your exam as a private
+  Github repository. You should add me @posadajd as a collaborator so I
+  can see the repository.
+\end{itemize}
+
+\hypertarget{topic-1-15-the-healthcare-system}{%
+\subsection{Topic 1 (15\%): The Healthcare
+System}\label{topic-1-15-the-healthcare-system}}
+
+\begin{itemize}
+\tightlist
+\item
+  Draw a the process that a person goes trough to get admitted to an ICU
+  after arriving to an emergency department. You could use a flowchart
+  or any other diagram that convey your thoughts. (100\%)
+\end{itemize}
+
+\hypertarget{topic-2-15-analytical-use-cases-with-clinical-data}{%
+\subsection{Topic 2 (15\%): Analytical Use Cases with Clinical
+Data}\label{topic-2-15-analytical-use-cases-with-clinical-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  Describe with your own words the three typical analytical use cases
+  with clinical data (40\%)
+\item
+  Fully describe the setup and clinical question of a prediction problem
+  (60\%)
+\end{itemize}
+
+\hypertarget{topic-3-30-clinical-data-standardization}{%
+\subsection{Topic 3 (30\%): Clinical Data
+Standardization}\label{topic-3-30-clinical-data-standardization}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use \href{athena.ohdsi.org}{Athena} to find the equivalent code for
+  five Colombian
+  \href{https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VP/DOA/actualizacion-cups-2022.pdf}{CUPS}
+  codes. CUPS codes can be found
+  \href{https://web.sispro.gov.co/WebPublico/Consultas/ConsultarDetalleReferenciaBasica.aspx?Code=CUPS}{here}
+  (50\%)
+\item
+  Use \href{athena.ohdsi.org}{Athena} to find the equivalent code for
+  five Colombian
+  \href{https://www.minsalud.gov.co/salud/MT/Paginas/estandar-datos-medicamentos.aspx}{IUM}
+  codes. IUM codes can be found
+  \href{https://www.datos.gov.co/Salud-y-Protecci-n-Social/C-DIGO-NICO-DE-MEDICAMENTOS-VIGENTES/i7cb-raxc}{here}
+  (50\%)
+\end{itemize}
+
+\hypertarget{topic-4-40-data-processing-and-feature-generation}{%
+\subsection{Topic 4 (40\%): Data Processing and Feature
+Generation}\label{topic-4-40-data-processing-and-feature-generation}}
+
+\begin{itemize}
+\tightlist
+\item
+  Load MIMIC IV OMOP-CDM sample data into a SQL lite database (10\%)
+\item
+  Write code to compute the top 10 diagnoses and present as a table
+  (20\%)
+\item
+  Write code to compute the top 10 used medications and present as a
+  table (20\%)
+\item
+  Inspect a single patient and generate features for the top 10
+  diagnoses and medications found on the previous points. (50\%)
+\end{itemize}
+
+\end{document}
