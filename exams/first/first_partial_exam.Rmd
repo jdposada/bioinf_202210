@@ -17,7 +17,7 @@ In this first partial you will evaluated on the following topics
 Each point will be graded independently. It is expected that you fully support all your answers. If the question requests coding, you should comment every line of code you write. The comments should show your understanding of what is going on. All the answers should be in this same document
 
 - **Time**: You will have 2 hours to complete the assignment
-- **Mode of delivery**: You will submit your exam as a private Github repository. You should add me @posadajd as a collaborator so I can see the repository.
+- **Mode of delivery**: You will submit your exam as a private Github repository. You should add me @jdposada as a collaborator so I can see the repository.
 
 ## Topic 1 (15%): The Healthcare System
 
@@ -25,13 +25,15 @@ Each point will be graded independently. It is expected that you fully support a
 
 ## Topic 2 (15%): Analytical Use Cases with Clinical Data
 
-- Describe with your own words the three typical analytical use cases with clinical data (40%)
-- Fully describe the setup and clinical question of a prediction problem (60%)
+- Describe with your own words the three typical analytical use cases with clinical data. Your answer should be less than 500 words. (40%)
+- Fully describe the setup and clinical question of a prediction problem. Your answer should be in about 500 words. (60%)
 
 ## Topic 3 (30%): Clinical Data Standardization
 
-- Use [Athena](athena.ohdsi.org) to find the equivalent code for five Colombian [CUPS](https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VP/DOA/actualizacion-cups-2022.pdf) codes. CUPS codes can be found [here](https://web.sispro.gov.co/WebPublico/Consultas/ConsultarDetalleReferenciaBasica.aspx?Code=CUPS) (50%)
--  Use [Athena](athena.ohdsi.org) to find the equivalent code for five Colombian [IUM](https://www.minsalud.gov.co/salud/MT/Paginas/estandar-datos-medicamentos.aspx) codes. IUM codes can be found [here](https://www.datos.gov.co/Salud-y-Protecci-n-Social/C-DIGO-NICO-DE-MEDICAMENTOS-VIGENTES/i7cb-raxc) (50%)
+- Use [Athena](athena.ohdsi.org) to find the equivalent code for five Colombian [CUPS](https://www.minsalud.gov.co/sites/rid/Lists/BibliotecaDigital/RIDE/VP/DOA/actualizacion-cups-2022.pdf) codes. CUPS codes can be found [here](https://web.sispro.gov.co/WebPublico/Consultas/ConsultarDetalleReferenciaBasica.aspx?Code=CUPS). *SNOMED-CT codes are preferred*. (50%)
+- Use [Athena](athena.ohdsi.org) to find the equivalent code for five Colombian [IUM](https://www.minsalud.gov.co/salud/MT/Paginas/estandar-datos-medicamentos.aspx) codes. IUM codes can be found [here](https://www.datos.gov.co/Salud-y-Protecci-n-Social/C-DIGO-NICO-DE-MEDICAMENTOS-VIGENTES/i7cb-raxc). *RxNorm codes are preferred*. (50%)
+
+Please include the links of the selected concepts in Athena. 
 
 ## Topic 4 (40%): Data Processing and Feature Generation
 
