@@ -1,0 +1,75 @@
+---
+title: "Common Data Models"
+output: html_document
+---
+
+## 0. Install dbplyr package
+
+This is to query the data using dplyr semantics instead of SQL
+
+```{r}
+install.packages("dbplyr")
+```
+```{r}
+library(dplyr)
+```
+
+## 1. Download CSV files
+
+Here we're downloading all the files from the [MIMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
+
+*Note: The downloaded files must be the ones related to the [OMOP-CDM data model](https://ohdsi.github.io/TheBookOfOhdsi/CommonDataModel.html).*
+
+1. Set working directory
+
+```{r}
+setwd("/home/ohdsi/workdir/src")
+```
+
+2. Create a data folder that is ignored by the .gitignore file
+
+```{r}
+data_dir <- "/home/ohdsi/workdir/data/mimic_iv"
+system(paste0("mkdir ", data_dir))
+```
+
+3. Download the data
+
+```{r echo=T, results='hide'}
+
+base_url = 'https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv'
+
+files = c('care_site.csv', 
+          'cdm_source.csv', 
+          'cohort.csv', 
+          'cohort_definition.csv', 
+          'condition_era.csv', 
+          'condition_occurrence.csv',  
+          'cost.csv', 
+          'device_exposure.csv', 
+          'dose_era.csv', 
+          'drug_era.csv', 
+          'drug_exposure.csv', 
+          'fact_relationship.csv', 
+          'location.csv', 
+          'measurement.csv', 
+          'metadata.csv', 
+          'note.csv', 
+          'note_nlp.csv', 
+          'observation.csv', 
+          'observation_period.csv', 
+          'payer_plan_period.csv', 
+          'person.csv', 
+          'procedure_occurrence.csv', 
+          'provider.csv', 
+          'specimen.csv', 
+          'visit_detail.csv', 
+          'visit_occurrence.csv')
+
+lapply(files, function(file){
+  download_url = paste0(base_url, '/', file, '?download')
+  file_path = paste0(data_dir, '/', file)
+  
+  download.file(download_url, file_path)
+})
+```
