@@ -1,6 +1,15 @@
 # Assignment #03
 
 ---
+```{r}
+#setup environment
+
+install.packages("reticulate")
+reticulate::install_miniconda()
+reticulate::py_install(c("scipy", "joblib" ,"scikit-learn"))
+reticulate::conda_install(envname='r-reticulate', packages = c('pytorch', 'torchvision', 'cpuonly'), forge = TRUE, pip = FALSE, channel = 'pytorch', pip_ignore_installed = TRUE, conda = 'auto')
+
+```
 
 ## 01) Patient Level Prediction
 
@@ -10,7 +19,7 @@ We're following [these steps](https://github.com/OHDSI/PatientLevelPrediction/bl
 library(PatientLevelPrediction)
 set.seed(1234)
 data(plpDataSimulationProfile)
-sampleSize <- 12000
+sampleSize <- 8000
 
 plpData <- simulatePlpData(
   plpDataSimulationProfile,
@@ -61,9 +70,9 @@ model <- setLRTorch(autoencoder=autoencoder, vae=vae, class_weight=class_weight)
 
 Model parameters:
 ```{r echo=T}
-testFraction <- 0.2
+testFraction <- 0.3
 testSplit <- 'person'
-nfold <- 3
+nfold <- 2
 splitSeed <- 1000
 ```
 
