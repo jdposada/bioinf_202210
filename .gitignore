@@ -40,6 +40,6 @@ vignettes/*.pdf
 
 # Assigment 01 related config
 src/assignment_1_downloads/*
-src/assignment1.html
+src/*.html
 src/mimic_iv_demo.sqlite
-
+src/*.txt

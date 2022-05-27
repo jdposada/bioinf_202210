@@ -1,0 +1,180 @@
+# Assignment #02
+
+---
+
+## 01. Load Eunomia Cohorts
+
+```{r echo=T, results='hide'}
+library(Eunomia)
+
+connectionDetails <- getEunomiaConnectionDetails()
+connection <- connect(connectionDetails)
+createCohorts(connectionDetails)
+```
+
+Check out the data by querying it:
+
+```{r echo=T, results='hide'}
+querySql(connection, "SELECT * FROM cohort LIMIT 5;")
+```
+
+## 02. Use Feature Extraction
+
+Create per-person covariates for a cohort of interest
+
+```{r echo=T, results='hide'}
+library(FeatureExtraction)
+
+cdmDatabaseSchema <- "main"
+resultsDatabaseSchema <- "main"
+
+settings <- createDefaultCovariateSettings()
+
+covariateData <- getDbCovariateData(connectionDetails = connectionDetails,
+                                    cdmDatabaseSchema = cdmDatabaseSchema,
+                                    cohortDatabaseSchema = resultsDatabaseSchema,
+                                    cohortTable = "cohort",
+                                    cohortId = 1,
+                                    rowIdField = "subject_id",
+                                    covariateSettings = settings)
+
+summary(covariateData)
+```
+
+Create aggregated covariates for a cohort of interest from per-person covariates
+
+```{r echo=T, results='hide'}
+covariateData2 <- aggregateCovariates(covariateData)
+summary(covariateData2)
+```
+
+Create aggregated covariates for a cohort of interest at creation
+
+```{r echo=T, results='hide'}
+covariateData3 <- getDbCovariateData(connectionDetails = connectionDetails,
+                                     cdmDatabaseSchema = cdmDatabaseSchema,
+                                     cohortDatabaseSchema = resultsDatabaseSchema,
+                                     cohortTable = "cohort",
+                                     cohortId = 1,
+                                     covariateSettings = settings,
+                                     aggregated = TRUE)
+summary(covariateData3)
+```
+
+## 03. Show the Features
+
+### Per-person Covariates
+
+Show Tables for per-person covariates
+
+```{r echo=T, results='hide'}
+show(covariateData)
+```
+
+Features for per-person covariates
+
+```{r echo=T, results='hide'}
+covariateData$covariateRef
+```
+
+```{r echo=T, results='hide'}
+covariateData$covariates
+```
+
+### Aggregated covariates from per-person covariates
+
+Show Tables for aggregated covariates from per-person covariates
+
+```{r echo=T, results='hide'}
+show(covariateData2)
+```
+
+Features for aggregated covariates from per-person covariates
+
+```{r echo=T, results='hide'}
+covariateData2$covariateRef
+```
+
+```{r echo=T, results='hide'}
+covariateData2$covariates
+```
+
+```{r echo=T, results='hide'}
+covariateData2$covariatesContinuous
+```
+
+Table1 for aggregated covariates from per-person covariates
+
+```{r echo=T, results='hide'}
+show(covariateData2)
+result2 <- createTable1(covariateData2, output = 'one column')
+print(result2, row.names = FALSE, right = FALSE)
+```
+
+### Aggregated covariates at creation
+
+Show Tables for aggregated covariates at creation
+
+```{r echo=T, results='hide'}
+show(covariateData3)
+```
+
+Features for aggregated covariates at creation
+
+```{r echo=T, results='hide'}
+covariateData3$covariateRef
+```
+
+```{r echo=T, results='hide'}
+covariateData3$covariates
+```
+
+```{r echo=T, results='hide'}
+covariateData3$covariatesContinuous
+```
+
+Table1 for aggregated covariates at creation
+
+```{r echo=T, results='hide'}
+result3 <- createTable1(covariateData3, output = 'one column')
+print(result3, row.names = FALSE, right = FALSE)
+```
+
+## 04. Create a Cohort using SQL
+
+### Download CSV files
+
+Here we're downloading all the files from the [MIMIC IV demo dataset](https://physionet.org/content/mimic-iv-demo-omop/0.9/1_omop_data_csv/#files-panel).
+
+*Note: The downloaded files must be the ones related to the [OMOP-CDM data model](https://ohdsi.github.io/TheBookOfOhdsi/CommonDataModel.html).*
+
+```{r echo=T, results='hide'}
+download_path = '/home/ohdsi/workdir/src/assignment_1_downloads'
+base_url = 'https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv'
+files = c('care_site.csv', 'cdm_source.csv', 'cohort.csv', 'cohort_definition.csv', 'condition_era.csv', 'condition_occurrence.csv',  'cost.csv', 'device_exposure.csv', 'dose_era.csv', 'drug_era.csv', 'drug_exposure.csv', 'fact_relationship.csv', 'location.csv', 'measurement.csv', 'metadata.csv', 'note.csv', 'note_nlp.csv', 'observation.csv', 'observation_period.csv', 'payer_plan_period.csv', 'person.csv', 'procedure_occurrence.csv', 'provider.csv', 'specimen.csv', 'visit_detail.csv', 'visit_occurrence.csv')
+lapply(files, function(file){
+  download_url = paste0(base_url, '/', file, '?download')
+  file_path = paste0(download_path, '/', file)
+  
+  download.file(download_url, file_path)
+})
+```
+
+## Create the Database
+
+Then we create the database (DB) with the [RSQLite](https://cran.r-project.org/web/packages/RSQLite/vignettes/RSQLite.html) package.
+
+```{r echo=T, results='hide'}
+library(DBI)
+source = '/home/ohdsi/workdir/src/assignment_1_downloads'
+files = list.files(source)
+# Create DB.
+mimic_iv_db = dbConnect(RSQLite::SQLite(), 'mimic_iv_demo.sqlite')
+lapply(files, function(file){
+  table_name = substr(file, 1, nchar(file) - 4)
+  file_path = paste0(source, '/', file)
+  data = read.csv(file_path)
+  dbWriteTable(mimic_iv_db, table_name, data, overwrite=TRUE)
+})
+dbDisconnect(mimic_iv_db)
+```

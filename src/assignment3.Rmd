@@ -1,0 +1,92 @@
+# Assignment #03
+
+---
+```{r}
+#setup environment
+
+install.packages("reticulate")
+reticulate::install_miniconda()
+reticulate::py_install(c("scipy", "joblib" ,"scikit-learn"))
+reticulate::conda_install(envname='r-reticulate', packages = c('pytorch', 'torchvision', 'cpuonly'), forge = TRUE, pip = FALSE, channel = 'pytorch', pip_ignore_installed = TRUE, conda = 'auto')
+
+```
+
+## 01) Patient Level Prediction
+
+We're following [these steps](https://github.com/OHDSI/PatientLevelPrediction/blob/main/inst/doc/BuildingDeepLearningModels.pdf) in order to create a Logistic Regression Model using PyTorch.
+
+```{r echo=T}
+library(PatientLevelPrediction)
+set.seed(1234)
+data(plpDataSimulationProfile)
+sampleSize <- 8000
+
+plpData <- simulatePlpData(
+  plpDataSimulationProfile,
+  n = sampleSize
+)
+
+population <- createStudyPopulation(
+  plpData,
+  outcomeId = 2,
+  binary = TRUE,
+  firstExposureOnly = FALSE,
+  washoutPeriod = 0,
+  removeSubjectsWithPriorOutcome = FALSE,
+  priorOutcomeLookback = 99999,
+  requireTimeAtRisk = FALSE,
+  minTimeAtRisk = 0,
+  riskWindowStart = 0,
+  addExposureDaysToStart = FALSE,
+  riskWindowEnd = 365,
+  addExposureDaysToEnd = FALSE,
+  verbosity = "INFO"
+)
+```
+
+
+We don't need to specify an stacked autoencoder or the variational autoenconder since we won't be working with it.
+
+```{r echo=T}
+autoencoder <- FALSE
+vae <- FALSE
+```
+
+
+Class weight for imbalanced data:
+
+```{r echo=T}
+class_weight <- 0
+```
+
+
+Model settings:
+
+```{r echo=T}
+# Specify the settings for Logistics regression model using PyTorch.
+model <- setLRTorch(autoencoder=autoencoder, vae=vae, class_weight=class_weight)
+```
+
+
+Model parameters:
+```{r echo=T}
+testFraction <- 0.3
+testSplit <- 'person'
+nfold <- 2
+splitSeed <- 1000
+```
+
+
+Training: 
+
+```{r echo=T}
+results <- PatientLevelPrediction::runPlp(population = population,
+                                          plpData = plpData,
+                                          modelSettings = model,
+                                          testSplit = testSplit,
+                                          testFraction = testFraction,
+                                          nfold = nfold,
+                                          splitSeed = splitSeed)
+```
+
+
